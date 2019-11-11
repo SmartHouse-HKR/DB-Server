@@ -11,3 +11,6 @@ Information on the server and database will be stored here including, example co
 
 
 -The repository named hiveMQclientTryOut contains a working example of sending a message and getting a message, it is a combination of tutorials and web guides that have be combined for a point of reference. 
+
+-The device topics list is found at the link below, any updated devices or device added request please contact a memeber of the server/db team. 
+ - https://docs.google.com/document/d/1tK9uskmy9744sV0YOUEHLYLMzICJQEoA2hdPPML1thE/edit?usp=sharing
