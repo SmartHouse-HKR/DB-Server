@@ -1,6 +1,6 @@
 package com.company;
 
-import com.hivemq.client.mqtt.mqtt3.Mqtt3AsyncClient;
+//import com.hivemq.client.mqtt.mqtt3.Mqtt3AsyncClient;
 import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.internal.wire.MqttSubscribe;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
@@ -11,7 +11,6 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 public class Main {
-
 
     public static void main(String[] args) {
 
