@@ -21,7 +21,7 @@ public class Main {
         String clientId     = "JavaSample";
         MemoryPersistence persistence = new MemoryPersistence();
 
-        try {
+       try {
             MqttClient sampleClient = new MqttClient(broker, clientId, persistence);
             MqttConnectOptions connOpts = new MqttConnectOptions();
             connOpts.setCleanSession(true);
