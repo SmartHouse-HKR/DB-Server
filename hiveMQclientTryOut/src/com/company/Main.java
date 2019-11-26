@@ -43,8 +43,10 @@ public class Main {
           //  System.exit(0);
             CountDownLatch receivedSignal = new CountDownLatch(10);
             MqttClient subscriber = new MqttClient(broker, clientId, persistence);
+            subscriber.setCallback(new SubscribeCallback());
           //  subscriber.subscribe("home/garden/fountain");
             subscriber.connect(connOpts);
+
             subscriber.subscribe("MQTTExamples", (topics, msg) -> {
                 byte[] payload = msg.getPayload();
              String messagetake = new String(payload);
@@ -53,6 +55,7 @@ public class Main {
                 messageArrived(topics,msg);
 
             });
+
 
 
 

@@ -15,14 +15,15 @@ public class DatabaseConnection {
     private PreparedStatement pStatement;
     private String query = null;
 
-    public void updateDB(String message){
+
+    public void updateDB(String topic, String message){
+
         try{
             gsonReader = new GsonReader();
             details = gsonReader.jsonFile();
             DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-
             connection = DriverManager.getConnection(details.getUrl(), details.getUser(), details.getPassword());
-            statement = "UPDATE devices SET deviceName = '"+message+"' WHERE idDevices = 1";
+            statement = "UPDATE mqttmessages SET message = '"+ message +"' WHERE topic = '" + topic + "'";
             pStatement = connection.prepareStatement(statement);
             pStatement.executeUpdate();
             connection.close();
