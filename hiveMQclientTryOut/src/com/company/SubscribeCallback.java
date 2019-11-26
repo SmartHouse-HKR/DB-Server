@@ -2,9 +2,6 @@ package com.company;
 
 import org.eclipse.paho.client.mqttv3.*;
 
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
 public class SubscribeCallback implements MqttCallback {
     private DatabaseConnection db;
 
@@ -22,7 +19,7 @@ public class SubscribeCallback implements MqttCallback {
     public void messageArrived(String topic, MqttMessage message) throws Exception {
         byte[] mqttmessage = message.getPayload();
         String mqttmessageString = new String (mqttmessage);
-        db.updateDB(topic, mqttmessageString);
+        db.updateMessages(topic, mqttmessageString);
 
         switch (topic) {
             case "smarthouse/indoor_light/state":
