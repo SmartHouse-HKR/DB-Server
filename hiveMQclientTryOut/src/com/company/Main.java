@@ -15,7 +15,7 @@ public class Main {
     public static void main(String[] args) {
 
         String topic        = "MQTTExamples";
-        String content      = "Message from MqttPublishSample db";
+        String content      = "Message from MqttPublishSampljkhjkfasdfasdffdahe db";
         int qos             = 2;
         String broker       = "tcp://localhost:1883";
         String clientId     = "JavaSample";
@@ -45,16 +45,18 @@ public class Main {
             MqttClient subscriber = new MqttClient(broker, clientId, persistence);
             subscriber.setCallback(new SubscribeCallback());
           //  subscriber.subscribe("home/garden/fountain");
-            subscriber.connect(connOpts);
-
-            subscriber.subscribe("MQTTExamples", (topics, msg) -> {
+          //  subscriber.connect(connOpts);
+            MqttConnections mqttConnections = new MqttConnections();
+            mqttConnections.MakeAconnect();
+            mqttConnections.publishMqttMessage("MQTTExamples","Tester");
+           /* subscriber.subscribe("MQTTExamples", (topics, msg) -> {
                 byte[] payload = msg.getPayload();
              String messagetake = new String(payload);
                 receivedSignal.countDown();
                 System.out.println(messagetake);
                 messageArrived(topics,msg);
 
-            });
+            });*/
 
 
 
@@ -98,7 +100,7 @@ public void connectWithHive(){
               "  QoS:\t" + message.getQos());
 if(topic.equals("MQTTExamples")){
     DatabaseConnection databaseConnection = new DatabaseConnection();
-    databaseConnection.updateDB(new String(message.getPayload()));
+
     }
 
 
