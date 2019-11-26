@@ -12,11 +12,11 @@ public class DatabaseConnection {
     private PreparedStatement pStatement;
     private String query = null;
 
-    public void updateDB(){
+    public void updateDB(String topic, String message){
         try{
             DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
             connection = DriverManager.getConnection("", "", "");
-            statement = "UPDATE devices SET devicestatus = 'On' WHERE idDevices = 1";
+            statement = "UPDATE mqttmessages SET message = '"+ message +"' WHERE topic = '" + topic + "'";
             pStatement = connection.prepareStatement(statement);
             pStatement.executeUpdate();
             connection.close();

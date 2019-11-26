@@ -38,14 +38,15 @@ public class Main {
           //  System.exit(0);
             CountDownLatch receivedSignal = new CountDownLatch(10);
             MqttClient subscriber = new MqttClient(broker, clientId, persistence);
+            subscriber.setCallback(new SubscribeCallback());
           //  subscriber.subscribe("home/garden/fountain");
             subscriber.connect(connOpts);
-            subscriber.subscribe("home/garden/fountain", (topics, msg) -> {
-                byte[] payload = msg.getPayload();
-             String messagetake = new String(payload);
-                receivedSignal.countDown();
-                System.out.println(messagetake);
-            });
+//            subscriber.subscribe("home/garden/fountain", (topics, msg) -> {
+//                byte[] payload = msg.getPayload();
+//             String messagetake = new String(payload);
+//                receivedSignal.countDown();
+//                System.out.println(messagetake);
+//            });
 
 
 
