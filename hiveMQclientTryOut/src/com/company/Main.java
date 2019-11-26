@@ -98,7 +98,6 @@ public void connectWithHive(){
               "  QoS:\t" + message.getQos());
 if(topic.equals("MQTTExamples")){
     DatabaseConnection databaseConnection = new DatabaseConnection();
-    databaseConnection.updateDB(new String(message.getPayload()));
     }
 
 
