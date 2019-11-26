@@ -15,7 +15,7 @@ public class Main {
     public static void main(String[] args) {
 
         String topic        = "MQTTExamples";
-        String content      = "Message from MqttPublishSample testing db";
+        String content      = "Message from MqttPublishSample db";
         int qos             = 2;
         String broker       = "tcp://localhost:1883";
         String clientId     = "JavaSample";
@@ -29,6 +29,7 @@ public class Main {
             connOpts.setCleanSession(true);
           connOpts.setUserName("admin-user");
           connOpts.setPassword(pass);
+
             System.out.println("Connecting to broker: "+broker);
             sampleClient.connect(connOpts);
             System.out.println("Connected");
@@ -94,7 +95,7 @@ public void connectWithHive(){
               "  QoS:\t" + message.getQos());
 if(topic.equals("MQTTExamples")){
     DatabaseConnection databaseConnection = new DatabaseConnection();
-    databaseConnection.updateDB();
+    databaseConnection.updateDB(new String(message.getPayload()));
     }
 
 
