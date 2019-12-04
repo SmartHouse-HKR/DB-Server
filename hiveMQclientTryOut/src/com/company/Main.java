@@ -6,6 +6,7 @@ import org.eclipse.paho.client.mqttv3.internal.wire.MqttSubscribe;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 import java.sql.Timestamp;
+import java.util.Scanner;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -13,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 public class Main {
 
     public static void main(String[] args) {
-
+        Scanner scanner = new Scanner(System.in);
         String topic        = "MQTTExamples";
         String content      = "Message from MqttPublishSampljkhjkfasdfasdffdahe db";
         int qos             = 2;
@@ -21,7 +22,8 @@ public class Main {
         String clientId     = "JavaSample";
         MemoryPersistence persistence = new MemoryPersistence();
         char[] pass = new char[2];
-       try {
+       String testMessage;
+        try {
            pass[0] = 'a';
            pass[1] ='b';
             MqttClient sampleClient = new MqttClient(broker, clientId, persistence);
@@ -38,25 +40,18 @@ public class Main {
             message.setQos(qos);
             sampleClient.publish(topic, message);
             System.out.println("Message published");
-         //   sampleClient.disconnect();
-            System.out.println("Disconnected");
-          //  System.exit(0);
+
             CountDownLatch receivedSignal = new CountDownLatch(10);
             MqttClient subscriber = new MqttClient(broker, clientId, persistence);
             subscriber.setCallback(new SubscribeCallback());
-          //  subscriber.subscribe("home/garden/fountain");
-          //  subscriber.connect(connOpts);
+
             MqttConnections mqttConnections = new MqttConnections();
             mqttConnections.MakeAconnect();
-            mqttConnections.publishMqttMessage("MQTTExamples","Tester");
-           /* subscriber.subscribe("MQTTExamples", (topics, msg) -> {
-                byte[] payload = msg.getPayload();
-             String messagetake = new String(payload);
-                receivedSignal.countDown();
-                System.out.println(messagetake);
-                messageArrived(topics,msg);
-
-            });*/
+         do {
+             System.out.println("Please input the message you would like to send to the device");
+             testMessage = scanner.nextLine();
+             mqttConnections.publishMqttMessage("MQTTExamples", testMessage);
+         }while (!testMessage.equals("Exit"));
 
 
 
