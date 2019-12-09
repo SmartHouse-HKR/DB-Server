@@ -35,10 +35,7 @@ public class MqttConnections {
     }
 
 
-    public void publishMqttMessage(String topic, String messageRaw) throws MqttException {
-        message = new MqttMessage(messageRaw.getBytes());
-        mqttClient.publish(topic, message);
 
 
     }
-}
+
