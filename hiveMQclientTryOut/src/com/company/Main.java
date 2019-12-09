@@ -17,7 +17,8 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         String topic = "MQTTExamples";
         String content = "Message from MqttPublishSampljkhjkfasdfasdffdahe db";
-        int qos = 2;
+     // this a commment man 
+       int qos = 2;
         String broker = "tcp://localhost:1883";
         String clientId = "JavaSample";
         MemoryPersistence persistence = new MemoryPersistence();
