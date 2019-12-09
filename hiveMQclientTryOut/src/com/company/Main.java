@@ -17,9 +17,9 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         String topic = "MQTTExamples";
         String content = "Message from MqttPublishSampljkhjkfasdfasdffdahe db";
-     // this a commment man 
+     // this a commment man
        int qos = 2;
-        String broker = "tcp://localhost:1883";
+        String brokerTest = "tcp://localhost:1883";
         String clientId = "JavaSample";
         MemoryPersistence persistence = new MemoryPersistence();
         char[] pass = new char[2];
@@ -27,13 +27,13 @@ public class Main {
         try {
             pass[0] = 'a';
             pass[1] = 'b';
-            MqttClient sampleClient = new MqttClient(broker, clientId, persistence);
+            MqttClient sampleClient = new MqttClient(brokerTest, clientId, persistence);
             MqttConnectOptions connOpts = new MqttConnectOptions();
             connOpts.setCleanSession(true);
             connOpts.setUserName("admin-user");
             connOpts.setPassword(pass);
 
-            System.out.println("Connecting to broker: " + broker);
+            System.out.println("Connecting to broker: " + brokerTest);
             sampleClient.connect(connOpts);
             System.out.println("Connected");
             System.out.println("Publishing message: " + content);
@@ -43,7 +43,7 @@ public class Main {
             System.out.println("Message published");
 
             CountDownLatch receivedSignal = new CountDownLatch(10);
-            MqttClient subscriber = new MqttClient(broker, clientId, persistence);
+            MqttClient subscriber = new MqttClient(brokerTest, clientId, persistence);
             subscriber.setCallback(new SubscribeCallback());
 
             MqttConnections mqttConnections = new MqttConnections();
