@@ -23,7 +23,7 @@ public class DatabaseConnection {
             details = gsonReader.jsonFile();
             DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
             connection = DriverManager.getConnection(details.getUrl(), details.getUser(), details.getPassword());
-            statement = "UPDATE mqttmessages SET message = '"+ message +"' WHERE topic = '" + topic + "'";
+            statement = "UPDATE latestmessages SET message = '"+ message +"' WHERE topic = '" + topic + "'";
             pStatement = connection.prepareStatement(statement);
             pStatement.executeUpdate();
             connection.close();
@@ -38,8 +38,7 @@ public class DatabaseConnection {
             details = gsonReader.jsonFile();
             DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
             connection = DriverManager.getConnection(details.getUrl(), details.getUser(), details.getPassword());
-            connection = DriverManager.getConnection(details.getUrl(), details.getUser(), details.getPassword());
-            statement = "UPDATE smarthouse SET voltage = voltage " + voltage + " WHERE id = 1";
+            statement = "UPDATE smarthouse SET voltage = voltage+" + voltage + " WHERE id = 1";
             pStatement = connection.prepareStatement(statement);
             pStatement.executeUpdate();
             connection.close();
@@ -47,4 +46,24 @@ public class DatabaseConnection {
             e.printStackTrace();
         }
     }
+
+    public void setState(String value){
+        try {
+            gsonReader = new GsonReader();
+            details = gsonReader.jsonFile();
+            DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+            //connection = DriverManager.getConnection(details.getUrl(), details.getUser(), details.getPassword());
+            connection = DriverManager.getConnection(details.getUrl(), details.getUser(), details.getPassword());
+            statement = "UPDATE lights SET light_state = '" + value +"' WHERE id = 1";
+            pStatement = connection.prepareStatement(statement);
+            pStatement.executeUpdate();
+            connection.close();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+
+
+
 }
