@@ -2,12 +2,16 @@ package com.company;
 
 import org.eclipse.paho.client.mqttv3.*;
 
+import java.util.ArrayList;
+
 public class SubscribeCallback implements MqttCallback {
+
+    private ArrayList<Integer> voltageOverview;
     private DatabaseConnection db;
 
     public SubscribeCallback() {
         db = new DatabaseConnection();
-
+        voltageOverview = new ArrayList<>();
     }
 
     @Override
@@ -21,8 +25,15 @@ public class SubscribeCallback implements MqttCallback {
         String mqttmessageString = new String (mqttmessage);
         db.updateMessages(topic, mqttmessageString);
 
-        switch (topic) {
+        if(topic.equals("smarthouse/voltage/value")){
+            int voltage = Integer.parseInt(mqttmessageString);
+            db.updateVoltage(voltage);
+            voltageOverview.add(voltage);
+        }
+
+        /*switch (topic) {
             case "smarthouse/indoor_light/state":
+                db.updateLights(mqttmessageString);
                 System.out.println(1);
                 break;
             case "smarthouse/outdoor_light/state":
@@ -108,7 +119,7 @@ public class SubscribeCallback implements MqttCallback {
                 break;
             default:
                 break;
-        }
+        }*/
     }
 
     @Override
