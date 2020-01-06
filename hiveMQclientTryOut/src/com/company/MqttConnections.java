@@ -43,6 +43,7 @@ ArrayList voltmeasurements;
         mqttClient.connect(mqttConnectOptions);
         mqttClient.subscribe("smarthouse/#");
         mqttClient.subscribe("smarthouse/voltage/value");
+
         System.out.println("running ");
       if(mqttClient.isConnected()==true){
         ArrayList<mqttMessageObject> mqttMessageObjectArrayList = db.onStart();

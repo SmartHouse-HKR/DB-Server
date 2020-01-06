@@ -1,12 +1,14 @@
 package com.company;
 
 
+import com.bluetooth.*;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
+import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.CountDownLatch;
 
@@ -15,8 +17,8 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String topic = "smarthouse/indoor_light/state";
-        String content = "Message from MqttPublishSampljkhjkfasdfasdffdahe db";
+        String topic = "smarthouse/bt_light1/state";
+        String content = "1111";
         int qos = 2;
         String broker = "tcp://localhost:1883";
         String clientId = "JavaSample";
@@ -24,6 +26,21 @@ public class Main {
         char[] pass = new char[2];
         String testMessage;
 
+        BluetoothAdapter bluetoothAdapter = new BluetoothAdapter();
+        List<BluetoothDevice> bluetoothDevices = bluetoothAdapter.getDevices();
+        CeilingLight cl = null;
+        StandingLight sl = null;
+        Fan fan = null;
+        for (
+                BluetoothDevice bluetoothDevice : bluetoothDevices) {
+            if (bluetoothDevice.getType().equals("C_LAMP")) {
+                cl = (CeilingLight) bluetoothDevice;
+            } else if (bluetoothDevice.getType().equals("S_LAMP")) {
+                sl = (StandingLight) bluetoothDevice;
+            } else if (bluetoothDevice.getType().equals("FAN")) {
+                fan = (Fan) bluetoothDevice;
+            }
+        }
         try {
             pass[0] = 'a';
             pass[1] = 'b';
@@ -39,6 +56,8 @@ public class Main {
             System.out.println("Publishing message: " + content);
             MqttMessage message = new MqttMessage(content.getBytes());
             message.setQos(qos);
+         //  sampleClient.subscribe("smarthouse/bt_fan1/state");
+
             sampleClient.publish(topic, message);
             System.out.println("Message published");
 

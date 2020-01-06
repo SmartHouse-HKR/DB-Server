@@ -1,13 +1,16 @@
 package com.company;
 
+import com.bluetooth.*;
 import org.eclipse.paho.client.mqttv3.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SubscribeCallback implements MqttCallbackExtended {
 
     private ArrayList<Integer> voltageOverview;
     private DatabaseConnection db;
+
 
     public SubscribeCallback() {
         db = new DatabaseConnection();
@@ -26,6 +29,21 @@ public class SubscribeCallback implements MqttCallbackExtended {
 
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
+        BluetoothAdapter bluetoothAdapter = new BluetoothAdapter();
+        List<BluetoothDevice> bluetoothDevices = bluetoothAdapter.getDevices();
+        CeilingLight cl = null;
+        StandingLight sl = null;
+        Fan fan = null;
+        for (
+                BluetoothDevice bluetoothDevice : bluetoothDevices) {
+            if (bluetoothDevice.getType().equals("C_LAMP")) {
+                cl = (CeilingLight) bluetoothDevice;
+            } else if (bluetoothDevice.getType().equals("S_LAMP")) {
+                sl = (StandingLight) bluetoothDevice;
+            } else if (bluetoothDevice.getType().equals("FAN")) {
+                fan = (Fan) bluetoothDevice;
+            }
+        }
         byte[] mqttmessage = message.getPayload();
         String mqttmessageString = new String (mqttmessage);
         db.updateMessages(topic, mqttmessageString);
@@ -35,7 +53,9 @@ public class SubscribeCallback implements MqttCallbackExtended {
             db.updateVoltage(voltage);
             voltageOverview.add(voltage);
         }
-
+        if(topic.equals("smarthouse/bt_fan1/state")){
+            fan.turnOnFan();
+        }
         /*switch (topic) {
             case "smarthouse/indoor_light/state":
                 db.updateLights(mqttmessageString);
