@@ -15,7 +15,7 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String topic = "MQTTExamples";
+        String topic = "smarthouse/indoor_light/state";
         String content = "Message from MqttPublishSampljkhjkfasdfasdffdahe db";
         int qos = 2;
         String broker = "tcp://localhost:1883";
@@ -23,6 +23,7 @@ public class Main {
         MemoryPersistence persistence = new MemoryPersistence();
         char[] pass = new char[2];
         String testMessage;
+
         try {
             pass[0] = 'a';
             pass[1] = 'b';
@@ -44,13 +45,18 @@ public class Main {
             CountDownLatch receivedSignal = new CountDownLatch(10);
             MqttClient subscriber = new MqttClient(broker, clientId, persistence);
             subscriber.setCallback(new SubscribeCallback());
-
             MqttConnections mqttConnections = new MqttConnections();
             mqttConnections.MakeAconnect();
-            do {
-                System.out.println("Please input the message you would like to send to the device");
+
+      do {
+
+          System.out.println("Please input the message you would like to send to the device");
                 testMessage = scanner.nextLine();
-                mqttConnections.publishMqttMessage("MQTTExamples", testMessage);
+                System.out.println("please input topic name");
+                topic = scanner.nextLine();
+              //  sampleClient.subscribe("smarthouse/indoor_light/state");
+          mqttConnections.publishMqttMessage(topic, testMessage);
+
             } while (!testMessage.equals("Exit"));
 
 

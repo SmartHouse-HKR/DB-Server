@@ -14,7 +14,7 @@ public class GsonReader {
     public DatabaseDetail jsonFile(){
         Gson gson = new Gson();
         try{
-            BufferedReader buffReader = new BufferedReader(new FileReader("K:\\SE2hivestuff\\databasedetails\\databasedetails.json"));
+            BufferedReader buffReader = new BufferedReader(new FileReader("C:\\Users\\alice2.0\\Desktop\\finalDB\\databasedetails.json"));
             databaseDetail = gson.fromJson(buffReader, DatabaseDetail.class);
             //System.out.println("läser json-filen "+ deviceJavaObjectClass.toString());
         }catch(Exception e){

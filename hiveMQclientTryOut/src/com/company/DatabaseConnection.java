@@ -41,7 +41,7 @@ public class DatabaseConnection {
             details = gsonReader.jsonFile();
             DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
             connection = DriverManager.getConnection(details.getUrl(), details.getUser(), details.getPassword());
-            statement = "UPDATE smarthouse SET voltage = voltage+" + voltage + " WHERE id = 1";
+            statement = "UPDATE smarthouse SET voltage = voltage+" + voltage + " WHERE idsmarthouse = 1";
             pStatement = connection.prepareStatement(statement);
             pStatement.executeUpdate();
             connection.close();
@@ -79,7 +79,7 @@ public class DatabaseConnection {
             ResultSet rs = pStatement.executeQuery(statement);
 
             while(rs.next()){
-                messages.add(new mqttMessageObject(rs.getInt("idlatestmessages"), rs.getString("topi"), rs.getString("message")));
+                messages.add(new mqttMessageObject(rs.getInt("idlatestmessages"), rs.getString("topic"), rs.getString("message")));
             }
         } catch (SQLException e){
             e.printStackTrace();

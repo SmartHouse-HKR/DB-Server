@@ -4,7 +4,7 @@ import org.eclipse.paho.client.mqttv3.*;
 
 import java.util.ArrayList;
 
-public class SubscribeCallback implements MqttCallback {
+public class SubscribeCallback implements MqttCallbackExtended {
 
     private ArrayList<Integer> voltageOverview;
     private DatabaseConnection db;
@@ -12,6 +12,11 @@ public class SubscribeCallback implements MqttCallback {
     public SubscribeCallback() {
         db = new DatabaseConnection();
         voltageOverview = new ArrayList<>();
+    }
+
+    @Override
+    public void connectComplete(boolean arg0, String arg1){
+
     }
 
     @Override
