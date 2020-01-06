@@ -1,14 +1,17 @@
 package com.company;
-
+import com.bluetooth.*;
 import org.eclipse.paho.client.mqttv3.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SubscribeCallback implements MqttCallbackExtended {
 
     private ArrayList<Integer> voltageOverview;
     private DatabaseConnection db;
-
+    CeilingLight cl = null;
+    StandingLight sl = null;
+    Fan fan = null;
     public SubscribeCallback() {
         db = new DatabaseConnection();
         voltageOverview = new ArrayList<>();
@@ -16,7 +19,19 @@ public class SubscribeCallback implements MqttCallbackExtended {
 
     @Override
     public void connectComplete(boolean arg0, String arg1){
+       /* BluetoothAdapter bluetoothAdapter = new BluetoothAdapter();
+        List<BluetoothDevice> bluetoothDevices = bluetoothAdapter.getDevices();
 
+
+        for (BluetoothDevice bluetoothDevice : bluetoothDevices) {
+            if (bluetoothDevice.getType().equals("C_LAMP")) {
+                cl = (CeilingLight) bluetoothDevice;
+            } else if (bluetoothDevice.getType().equals("S_LAMP")) {
+                sl = (StandingLight) bluetoothDevice;
+            } else if (bluetoothDevice.getType().equals("FAN")) {
+                fan = (Fan) bluetoothDevice;
+            }
+        }*/
     }
 
     @Override
@@ -36,10 +51,9 @@ public class SubscribeCallback implements MqttCallbackExtended {
             voltageOverview.add(voltage);
         }
 
-        /*switch (topic) {
+        switch (topic) {
             case "smarthouse/indoor_light/state":
-                db.updateLights(mqttmessageString);
-                System.out.println(1);
+
                 break;
             case "smarthouse/outdoor_light/state":
                 System.out.println(2);
@@ -108,23 +122,46 @@ public class SubscribeCallback implements MqttCallbackExtended {
                 System.out.println(23);
                 break;
             case "smarthouse/bt_fan/state":
-                System.out.println(24);
+                if(mqttmessageString.equals("on"))
+                {
+                    System.out.println("turning fan on");
+                   // fan.turnOnFan();
+                }
+                else {
+                    System.out.println("turning fan off");
+                    //fan.turnOffFan();
+                }
                 break;
             case "smarthouse/bt_fan/swing":
-                System.out.println(25);
+                ///fan.changeSwing();
+                System.out.println("swinging fan");
                 break;
             case "smarthouse/bt_fan/speed":
-                System.out.println(26);
+                if(mqttmessageString.equals("higher")){
+                    //fan.speedUp();
+                    System.out.println("fan up");
+                }else{
+                  //  fan.speedDown();
+                    System.out.println("fan down");
+                }
                 break;
             case "smarthouse/bt_light/state":
-                System.out.println(27);
+                if(mqttmessageString.equals("1111")){
+                   // cl.turnOnSet("1111");
+                }else{
+                   // cl.turnOnSet("0001");
+                }
                 break;
             case "smarthouse/bt_lamp/state":
-                System.out.println(28);
+                if(mqttmessageString.equals("on")){
+                    //sl.turnOnLamp();
+                }else{
+                    //sl.turnOffLamp();
+                }
                 break;
             default:
                 break;
-        }*/
+        }
     }
 
     @Override
