@@ -10,5 +10,6 @@
     <orderEntry type="library" exported="" name="com.google.code.gson:gson:2.8.5" level="project" />
     <orderEntry type="library" exported="" name="mysql:mysql-connector-java:8.0.18" level="project" />
     <orderEntry type="library" exported="" name="org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.2" level="project" />
+    <orderEntry type="library" name="BluetoothAPI" level="project" />
   </component>
 </module>

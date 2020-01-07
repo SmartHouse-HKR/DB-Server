@@ -17,6 +17,7 @@ public class DatabaseConnection {
     private String statement = null;
     private PreparedStatement pStatement;
     private String query = null;
+    private Statement voltageStatement;
 
 
     public void updateMessages(String topic, String message){
@@ -35,15 +36,18 @@ public class DatabaseConnection {
         }
     }
 
-    public void updateVoltage(int voltage){
+    public void updateVoltage(double voltage){
         try {
             gsonReader = new GsonReader();
-            details = gsonReader.jsonFile();
+            //details = gsonReader.jsonFile();
             DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
             connection = DriverManager.getConnection(details.getUrl(), details.getUser(), details.getPassword());
+            voltageStatement = connection.createStatement();
             statement = "UPDATE smarthouse SET voltage = voltage+" + voltage + " WHERE idsmarthouse = 1";
-            pStatement = connection.prepareStatement(statement);
-            pStatement.executeUpdate();
+            voltageStatement.addBatch(statement);
+            statement = "INSERT INTO voltages(voltage, smarthouse_idsmarthouse) VALUES(" + voltage + ", 1)";
+            voltageStatement.addBatch(statement);
+            voltageStatement.executeBatch();
             connection.close();
         } catch (SQLException e){
             e.printStackTrace();
