@@ -34,12 +34,12 @@ public class Main {
             connOpts.setPassword(pass);
 
             System.out.println("Connecting to broker: " + broker);
-            sampleClient.connect(connOpts);
-            System.out.println("Connected");
+            //sampleClient.connect(connOpts);
+          //  System.out.println("Connected");
             System.out.println("Publishing message: " + content);
             MqttMessage message = new MqttMessage(content.getBytes());
             message.setQos(qos);
-            sampleClient.publish(topic, message);
+            //sampleClient.publish(topic, message);
             System.out.println("Message published");
 
             CountDownLatch receivedSignal = new CountDownLatch(10);
@@ -48,7 +48,7 @@ public class Main {
             MqttConnections mqttConnections = new MqttConnections();
             mqttConnections.MakeAconnect();
 
-      do {
+     /* do {
 
           System.out.println("Please input the message you would like to send to the device");
                 testMessage = scanner.nextLine();
@@ -57,7 +57,7 @@ public class Main {
               //  sampleClient.subscribe("smarthouse/indoor_light/state");
           mqttConnections.publishMqttMessage(topic, testMessage);
 
-            } while (!testMessage.equals("Exit"));
+            } while (!testMessage.equals("Exit"));*/
 
 
         } catch (MqttException me) {

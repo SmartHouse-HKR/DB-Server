@@ -19,7 +19,7 @@ public class SubscribeCallback implements MqttCallbackExtended {
 
     @Override
     public void connectComplete(boolean arg0, String arg1){
-       /* BluetoothAdapter bluetoothAdapter = new BluetoothAdapter();
+        BluetoothAdapter bluetoothAdapter = new BluetoothAdapter();
         List<BluetoothDevice> bluetoothDevices = bluetoothAdapter.getDevices();
 
 
@@ -31,7 +31,7 @@ public class SubscribeCallback implements MqttCallbackExtended {
             } else if (bluetoothDevice.getType().equals("FAN")) {
                 fan = (Fan) bluetoothDevice;
             }
-        }*/
+        }
     }
 
     @Override
@@ -45,11 +45,11 @@ public class SubscribeCallback implements MqttCallbackExtended {
         String mqttmessageString = new String (mqttmessage);
         db.updateMessages(topic, mqttmessageString);
 
-        if(topic.equals("smarthouse/voltage/value")){
+        /*if(topic.equals("smarthouse/voltage/value")){
             int voltage = Integer.parseInt(mqttmessageString);
             db.updateVoltage(voltage);
             voltageOverview.add(voltage);
-        }
+        }*/
 
         switch (topic) {
             case "smarthouse/indoor_light/state":
@@ -125,38 +125,38 @@ public class SubscribeCallback implements MqttCallbackExtended {
                 if(mqttmessageString.equals("on"))
                 {
                     System.out.println("turning fan on");
-                   // fan.turnOnFan();
+                    fan.turnOnFan();
                 }
                 else {
                     System.out.println("turning fan off");
-                    //fan.turnOffFan();
+                    fan.turnOffFan();
                 }
                 break;
             case "smarthouse/bt_fan/swing":
-                ///fan.changeSwing();
+                fan.changeSwing();
                 System.out.println("swinging fan");
                 break;
             case "smarthouse/bt_fan/speed":
                 if(mqttmessageString.equals("higher")){
-                    //fan.speedUp();
+                    fan.speedUp();
                     System.out.println("fan up");
                 }else{
-                  //  fan.speedDown();
+                    fan.speedDown();
                     System.out.println("fan down");
                 }
                 break;
             case "smarthouse/bt_light/state":
                 if(mqttmessageString.equals("1111")){
-                   // cl.turnOnSet("1111");
+                   cl.turnOnSet("1111");
                 }else{
-                   // cl.turnOnSet("0001");
+                    cl.turnOnSet("0001");
                 }
                 break;
             case "smarthouse/bt_lamp/state":
                 if(mqttmessageString.equals("on")){
-                    //sl.turnOnLamp();
+                    sl.turnOnLamp();
                 }else{
-                    //sl.turnOffLamp();
+                    sl.turnOffLamp();
                 }
                 break;
             default:
@@ -166,7 +166,7 @@ public class SubscribeCallback implements MqttCallbackExtended {
 
     @Override
     public void connectionLost(Throwable cause) {
-
+        System.out.println("I AM A CONNECTION AND I AM LOST!!");
     }
 }
 
