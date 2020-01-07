@@ -36,7 +36,7 @@ public class DatabaseConnection {
         }
     }
 
-    public void updateVoltage(int voltage){
+    public void updateVoltage(double voltage){
         try {
             gsonReader = new GsonReader();
             //details = gsonReader.jsonFile();
