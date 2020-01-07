@@ -24,13 +24,13 @@ public class MqttConnections implements MqttCallbackExtended {
     private CeilingLight cl = null;
     private StandingLight sl = null;
     private Fan fan = null;
-    private String voltageValue = "smarthouse/voltage/value";
-    private String btFanState = "smarthouse/bt_fan1/state";
-    private String btFanSwing = "smarthouse/bt_fan1/swing";
-    private String btFanSpeed = "smarthouse/bt_fan1/speed";
-    private String btLightState = "smarthouse/bt_light1/state";
-    private String btLampState = "smarthouse/bt_lamp1/state";
-    private String btFanMode = "smarthouse/bt_fan1/mode";
+    private final String voltageValue = "smarthouse/voltage/value";
+    private final String btFanState = "smarthouse/bt_fan1/state";
+    private final String btFanSwing = "smarthouse/bt_fan1/swing";
+    private final String btFanSpeed = "smarthouse/bt_fan1/speed";
+    private final String btLightState = "smarthouse/bt_light1/state";
+    private final String btLampState = "smarthouse/bt_lamp1/state";
+    private final String btFanMode = "smarthouse/bt_fan1/mode";
 
     public void MakeAconnect() throws MqttException {
         db = new DatabaseConnection();
@@ -45,7 +45,7 @@ public class MqttConnections implements MqttCallbackExtended {
         mqttConnectOptions.setAutomaticReconnect(true);
 
        //broker = "tcp://192.168.0.186:1883";
-       broker = "tcp://194.47.28.35:1883";
+       broker = "tcp://localhost:1883";
         qos = 2;
         clientID = "JavaSample";
         persistence = new MemoryPersistence();
@@ -90,7 +90,7 @@ public class MqttConnections implements MqttCallbackExtended {
         try {
             ArrayList<mqttMessageObject> mqttMessageObjectArrayList = db.onStart();
             for (mqttMessageObject mqttMsg : mqttMessageObjectArrayList) {
-                publishMqttMessage(mqttMsg.getTopic(), "");
+                publishMqttMessage(mqttMsg.getTopic(), mqttMsg.getMessage());
             }
             //subscribing to all smarthouse topics
             mqttClient.subscribe("smarthouse/#");
@@ -128,6 +128,7 @@ public class MqttConnections implements MqttCallbackExtended {
         System.out.println("Message: " + mqttMessageString);
         System.out.println();
         if(!topic.equals("smarthouse/voltage/value") || !topic.equals("smarthouse/voltage/overview")){
+            System.out.println(mqttMessageString);
             db.updateMessages(topic, mqttMessageString);
         }
 
@@ -177,6 +178,7 @@ public class MqttConnections implements MqttCallbackExtended {
                 }
                 break;
             case btFanMode:
+                fan.changeMode();
                 break;
             default:
                 break;
