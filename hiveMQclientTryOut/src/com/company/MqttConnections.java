@@ -31,14 +31,14 @@ public class MqttConnections implements MqttCallbackExtended {
         password[0] = 'a';
         password[1] = 'b';
         MqttConnectOptions mqttConnectOptions = new MqttConnectOptions();
-        mqttConnectOptions.setPassword(password);
+       // mqttConnectOptions.setPassword(password);
         mqttConnectOptions.setCleanSession(true);
-        mqttConnectOptions.setUserName("admin-user");
+        //mqttConnectOptions.setUserName("admin-user");
         mqttConnectOptions.setMaxInflight(60);
         mqttConnectOptions.setAutomaticReconnect(true);
 
        //broker = "tcp://192.168.0.186:1883";
-       broker = "tcp://localhost:1883";
+       broker = "tcp://194.47.28.35:1883";
         qos = 2;
         clientID = "JavaSample";
         persistence = new MemoryPersistence();
@@ -60,8 +60,8 @@ public class MqttConnections implements MqttCallbackExtended {
         }}
       else{
           System.out.println("the broker is down");
-      }*/
-
+      }
+*/
     }
 
 
@@ -120,7 +120,7 @@ public void printOutLast20VoltageRecordings() throws MqttException {
 
     @Override
     public void connectionLost(Throwable throwable) {
-        System.out.println(" I LOST HOUSTON");
+        System.out.println(throwable.toString());
     }
 
     @Override
@@ -223,11 +223,7 @@ public void printOutLast20VoltageRecordings() throws MqttException {
                 }
                 break;
             case "smarthouse/bt_light/state":
-                if(mqttMessageString.equals("1111")){
-                    cl.turnOnSet("1111");
-                }else{
-                    cl.turnOnSet("0001");
-                }
+                cl.turnOnSet(mqttMessageString);
                 break;
             case "smarthouse/bt_lamp/state":
                 if(mqttMessageString.equals("on")){
@@ -241,6 +237,9 @@ public void printOutLast20VoltageRecordings() throws MqttException {
         }
 
         /*if(!topic.equals("smarthouse/voltage/value") || !topic.equals("smarthouse/voltage/overview")){
+            if(topic.equals("smarthouse/bt_fan1/state") && mqttMessageString.equals("on")){
+                fan.turnOnFan();
+            }
             db.updateMessages(topic, mqttMessageString);
             System.out.println("Is now On " + topic);
         }

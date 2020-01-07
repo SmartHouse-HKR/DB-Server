@@ -33,7 +33,7 @@ public class Main {
             connOpts.setUserName("admin-user");
             connOpts.setPassword(pass);
 
-            System.out.println("Connecting to broker: " + broker);
+            /*System.out.println("Connecting to broker: " + broker);
             //sampleClient.connect(connOpts);
           //  System.out.println("Connected");
             System.out.println("Publishing message: " + content);
@@ -44,9 +44,14 @@ public class Main {
 
             CountDownLatch receivedSignal = new CountDownLatch(10);
             MqttClient subscriber = new MqttClient(broker, clientId, persistence);
-            subscriber.setCallback(new SubscribeCallback());
-            MqttConnections mqttConnections = new MqttConnections();
-            mqttConnections.MakeAconnect();
+            subscriber.setCallback(new SubscribeCallback());*/
+
+                try{
+                    MqttConnections mqttConnections = new MqttConnections();
+                    mqttConnections.MakeAconnect();
+                } catch(MqttException e){
+                    e.printStackTrace();
+                }
 
      /* do {
 

@@ -24,9 +24,9 @@ public class DatabaseConnection {
 
         try{
             gsonReader = new GsonReader();
-            details = gsonReader.jsonFile();
+            //details = gsonReader.jsonFile();
             DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-            connection = DriverManager.getConnection(details.getUrl(), details.getUser(), details.getPassword());
+            connection = DriverManager.getConnection("1", "1", "1");
             statement = "UPDATE latestmessages SET message = '"+ message +"' WHERE topic = '" + topic + "'";
             pStatement = connection.prepareStatement(statement);
             pStatement.executeUpdate();
@@ -39,9 +39,9 @@ public class DatabaseConnection {
     public void updateVoltage(int voltage){
         try {
             gsonReader = new GsonReader();
-            details = gsonReader.jsonFile();
+            //details = gsonReader.jsonFile();
             DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-            connection = DriverManager.getConnection(details.getUrl(), details.getUser(), details.getPassword());
+            connection = DriverManager.getConnection("1", "1", "1");
             voltageStatement = connection.createStatement();
             statement = "UPDATE smarthouse SET voltage = voltage+" + voltage + " WHERE idsmarthouse = 1";
             voltageStatement.addBatch(statement);
@@ -74,10 +74,10 @@ public class DatabaseConnection {
         ArrayList<mqttMessageObject> messages = new ArrayList<>();
         try{
             gsonReader = new GsonReader();
-            details = gsonReader.jsonFile();
+            //details = gsonReader.jsonFile();
             DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
             //connection = DriverManager.getConnection(details.getUrl(), details.getUser(), details.getPassword());
-            connection = DriverManager.getConnection(details.getUrl(), details.getUser(), details.getPassword());
+            connection = DriverManager.getConnection("1", "1", "1");
             statement = "SELECT * FROM latestmessages";
             pStatement = connection.prepareStatement(statement);
             ResultSet rs = pStatement.executeQuery(statement);
